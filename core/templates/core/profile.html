@@ -1,0 +1,180 @@
+
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="mt-5 py-8 mb-5">
+    <div class="grid grid-cols-6 gap-4">
+        <div class="col-start-2 col-span-4 ...">
+            {% comment %}  {% endcomment %}
+            <div class="flex ">
+                <div class="flex-1  px-2 py-2 m-2">
+                    
+                    <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                        
+                        <div class="flex flex-col items-center pb-10 py-4">
+                            {% if user.profile_pic %}
+                            <img class="w-24 h-24 mb-3 rounded-full shadow-lg" src="{{user.profile_pic.url}}" alt="Bonnie image"/>
+                            {% else %}
+                                <img class="w-24 h-24 mb-3 rounded-full shadow-lg" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="Bonnie image"/>
+                            {% endif %}
+                            <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{user.first_name}} {{user.last_name}}</h5>
+                            <span class="text-sm text-gray-500 dark:text-gray-400">{{user.email}} </span>
+                            <div class="flex mt-2 md:mt-3 px-2 mx-2">
+
+                                <span class="text-sm text-gray-500 dark:text-gray-400">{{user.bio |  linebreaks}}</span>
+                            </div>
+                            <div class="flex mt-4 md:mt-6 px-2 mx-2">
+                                <a href="#" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add friend</a>
+                                <a href="#" class="py-2 px-4 ms-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Message</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-1  px-4 py-2 m-2">
+                    {% comment %} Medium length {% endcomment %}
+                    
+
+                    <div class="w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                        <div class="flex items-center justify-between mb-4">
+                            
+                        </div>
+                        <div class="flow-root">
+                                <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+                                    <li class="py-3 sm:py-4">
+                                        <div class="flex items-center">
+                                            <div class="flex-1 min-w-0 ms-4">
+                                                <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                                    Full Name
+                                                </p>
+                                                <!-- <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                                    {{user.email}}
+                                                </p> -->
+                                            </div>
+                                            <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                                {{user.first_name}} {{user.last_name}}
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="py-3 sm:py-4">
+                                        <div class="flex items-center ">
+                                            <div class="flex-1 min-w-0 ms-4">
+                                                <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                                    Username
+                                                </p>
+                                              
+                                            </div>
+                                            <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                                {{user.username}}
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="py-3 sm:py-4">
+                                        <div class="flex items-center ">
+                                            <div class="flex-1 min-w-0 ms-4">
+                                                <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                                    E-mail
+                                                </p>
+                                              
+                                            </div>
+                                            <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                                {{user.email}}
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="py-3 sm:py-4">
+                                        <div class="flex items-center ">
+                                            <div class="flex-1 min-w-0 ms-4">
+                                                <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                                    Phone
+                                                </p>
+                                              
+                                            </div>
+                                            <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                                {{user.phone}}
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="py-3 sm:py-4">
+                                        <div class="flex items-center ">
+                                            <div class="flex-1 min-w-0 ms-4">
+                                                <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                                    Address
+                                                </p>
+                                              
+                                            </div>
+                                            <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                                {{user.address}}
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                        </div>
+                        
+                        <div class="py-4">
+                            <a href="{% url 'update-profile'  %}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Modifier</a>
+                        </div>
+                    </div>
+
+                    
+                </div>
+                
+            </div>
+
+
+            
+
+        </div>
+        {% comment %} <div class="col-start-1 col-end-7 ..."></div> {% endcomment %}
+
+    </div>
+    
+    
+    </div>
+    <!-- BLOGS -->
+    <div class="grid grid-cols-2 gap-4 mx-10 ">
+    </div>
+    <div class="grid grid-cols-1 grid-rows-1 md:grid-cols-3 mx-10 px-10">
+        
+        
+        {% for blog in blogs %}
+        <div
+          class="me-4 block rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark dark:text-white text-surface">
+          <div class="p-6">
+            <a href="#">
+                {% if blog.thumpnail %}
+                <img class="p-8 rounded-t-lg" src="{{blog.thumpnail.url}}" alt="product image" />
+                {% endif %}
+            </a>
+            <h5
+              class="mb-2 text-xl font-medium leading-tight">
+              {{blog.title}}
+            </h5>
+            <h5
+              class="mb-2 text-xl font-small leading-tight">
+              {{blog.created}}
+            </h5>
+            <p class="mb-4 text-base">
+                {{blog.body|truncatechars:"180"}} ...
+            </p>
+            <a href="{% url 'detail' blog.slug %}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Detail</a>
+            
+          </div>
+        </div>
+        {% endfor %}
+      
+      </div>
+
+
+
+
+
+{% endblock content %}
+
+
+
+
+
+
+

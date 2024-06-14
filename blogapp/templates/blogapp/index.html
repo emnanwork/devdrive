@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <!-- Text Header -->
+    <header class="w-full container mx-auto">
+        <div class="flex flex-col items-center py-12">
+            <a class="font-bold text-gray-800 uppercase hover:text-gray-700 text-5xl" href="#">
+                DevDrive 
+            </a>
+            <p class="text-lg text-gray-600">
+                Lorem Ipsum Dolor Sit Amet
+            </p>
+        </div>
+    </header>
+
+    <!-- Topic Nav -->
+    <nav class="w-full py-4 border-t border-b bg-gray-100" x-data="{ open: false }">
+        <div class="block sm:hidden">
+            <a
+                href="#"
+                class="block md:hidden text-base font-bold uppercase text-center flex justify-center items-center"
+                @click="open = !open"
+            >
+                Topics <i :class="open ? 'fa-chevron-down': 'fa-chevron-up'" class="fas ml-2"></i>
+            </a>
+        </div>
+        <div :class="open ? 'block': 'hidden'" class="w-full flex-grow sm:flex sm:items-center sm:w-auto">
+            <div class="w-full container mx-auto flex flex-col sm:flex-row items-center justify-center text-sm font-bold uppercase mt-0 px-6 py-2">
+                {% for cat in cats %}
+                    <a href="#" class="hover:bg-gray-400 rounded py-2 px-4 mx-2">{{cat.title}}</a>
+                {% endfor %}
+                {% comment %} <a href="#" class="hover:bg-gray-400 rounded py-2 px-4 mx-2">Automotive</a>
+                <a href="#" class="hover:bg-gray-400 rounded py-2 px-4 mx-2">Finance</a>
+                <a href="#" class="hover:bg-gray-400 rounded py-2 px-4 mx-2">Politics</a>
+                <a href="#" class="hover:bg-gray-400 rounded py-2 px-4 mx-2">Culture</a>
+                <a href="#" class="hover:bg-gray-400 rounded py-2 px-4 mx-2">Sports</a> {% endcomment %}
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="container mx-auto flex flex-wrap py-6">
+
+        <!-- Posts Section -->
+        <section class="w-full md:w-2/3 flex flex-col items-center px-3">
+
+            {% for blog in blogs %}
+
+            <article class="flex flex-col shadow my-4">
+                <!-- Article Image -->
+                <a href="#" class="hover:opacity-75">
+                    <img src="{{blog.thumpnail.url}}">
+                </a>
+                <div class="bg-white flex flex-col justify-start p-6">
+                    <a href="#" class="text-blue-700 text-sm font-bold uppercase pb-4">{{blog.catgeory}}</a>
+                    <a href="#" class="text-3xl font-bold hover:text-gray-700 pb-4">{{blog.title}}</a>
+                    <p href="#" class="text-sm pb-3">
+                        By <a href="#" class="font-semibold hover:text-gray-800">David Grzyb</a>, {{blog.created}}
+                    </p>
+                    <a href="#" class="pb-6"> {{blog.body|truncatechars:"180"}} ...</a>
+                    <a href="{% url 'detail' blog.slug %}" class="uppercase text-gray-800 hover:text-black">Continue Reading <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+
+            {% endfor %}
+
+            {% comment %}
+             {% endcomment %}
+
+            <!-- Pagination -->
+            <div class="flex items-center py-8">
+                <a href="#" class="h-10 w-10 bg-blue-800 hover:bg-blue-600 font-semibold text-white text-sm flex items-center justify-center">1</a>
+                <a href="#" class="h-10 w-10 font-semibold text-gray-800 hover:bg-blue-600 hover:text-white text-sm flex items-center justify-center">2</a>
+                <a href="#" class="h-10 w-10 font-semibold text-gray-800 hover:text-gray-900 text-sm flex items-center justify-center ml-3">Next <i class="fas fa-arrow-right ml-2"></i></a>
+            </div>
+
+        </section>
+
+        <!-- Sidebar Section -->
+        <aside class="w-full md:w-1/3 flex flex-col items-center px-3">
+        
+                <!-- Side widgets-->
+                <div class="col-lg-2">
+                    <!-- Search widget-->
+                    
+                    <form>   
+                        {% comment %} <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label> {% endcomment %}
+                        <div class="relative">
+                            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                                </svg>
+                            </div>
+                            <input type="search" id="search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required />
+                            <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+                        </div>
+                    </form>
+
+                    <!-- Categories widget-->
+                    
+                    <div  class="block mt-5 max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Categories</h5>
+                        {% comment %} <p class="font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p> {% endcomment %}
+                        <div class="px-6 pt-4 pb-2">
+                            
+                            <a> <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#photography</span></a>
+                            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#travel</span>
+                            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#winter</span>
+                        </div>
+                    </div>
+                    
+                    <div  class="block mt-5 max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">DevDrive</h5>
+                        <p class="font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
+                        
+                    </div>
+
+                    
+                </div>
+            <div class="w-full bg-white shadow flex flex-col my-4 p-6">
+                <!-- Search widget-->
+                
+                <form>   
+                    {% comment %} <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label> {% endcomment %}
+                    <div class="relative">
+                        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                            </svg>
+                        </div>
+                        <input type="search" id="search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required />
+                        <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="w-full bg-white shadow flex flex-col my-4 p-6">
+                <p class="text-xl font-semibold pb-5">About Us</p>
+                <p class="pb-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas mattis est eu odio sagittis tristique. Vestibulum ut finibus leo. In hac habitasse platea dictumst.</p>
+                <a href="#" class="w-full bg-blue-800 text-white font-bold text-sm uppercase rounded hover:bg-blue-700 flex items-center justify-center px-2 py-3 mt-4">
+                    Get to know us
+                </a>
+            </div>
+
+            <div class="w-full bg-white shadow flex flex-col my-4 p-6">
+                <p class="text-xl font-semibold pb-5">Instagram</p>
+                <div class="grid grid-cols-3 gap-3">
+                    <img class="hover:opacity-75" src="https://source.unsplash.com/collection/1346951/150x150?sig=1">
+                    <img class="hover:opacity-75" src="https://source.unsplash.com/collection/1346951/150x150?sig=2">
+                    <img class="hover:opacity-75" src="https://source.unsplash.com/collection/1346951/150x150?sig=3">
+                    <img class="hover:opacity-75" src="https://source.unsplash.com/collection/1346951/150x150?sig=4">
+                    <img class="hover:opacity-75" src="https://source.unsplash.com/collection/1346951/150x150?sig=5">
+                    <img class="hover:opacity-75" src="https://source.unsplash.com/collection/1346951/150x150?sig=6">
+                    <img class="hover:opacity-75" src="https://source.unsplash.com/collection/1346951/150x150?sig=7">
+                    <img class="hover:opacity-75" src="https://source.unsplash.com/collection/1346951/150x150?sig=8">
+                    <img class="hover:opacity-75" src="https://source.unsplash.com/collection/1346951/150x150?sig=9">
+                </div>
+                <a href="#" class="w-full bg-blue-800 text-white font-bold text-sm uppercase rounded hover:bg-blue-700 flex items-center justify-center px-2 py-3 mt-6">
+                    <i class="fab fa-instagram mr-2"></i> Follow @dgrzyb
+                </a>
+            </div>
+
+        </aside>
+
+    </div>
+
+
+    {% endblock content %}
