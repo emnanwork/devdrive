@@ -1,0 +1,2 @@
+## Django
+# style tailwind css

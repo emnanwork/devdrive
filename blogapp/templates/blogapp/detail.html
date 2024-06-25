@@ -53,49 +53,74 @@
                     <section class="mb-5 mt-5">
                         <div class="card bg-light">
                             <div class="card-body">
+                                {% if request.user.is_authenticated %}
                                 <!-- Comment form-->
 
-                                <form class="mb-8 w-[50rem]">
-                                <div class="mb-6">
-                                    {% comment %} <label for="large-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Large input</label> {% endcomment %}
-                                    <!-- <input type="text" id="large-input" placeholder="Join the discussion and leave a comment!" class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"> -->
-                                    <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Leave a comment..."></textarea>
-                                </div>
+                                <form class="mb-8 w-[50rem]" action="" method="POST">
+                                    {% csrf_token %}
+                                    <div class="mb-6">
+                                        {% comment %} <label for="large-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Large input</label> {% endcomment %}
+                                        <!-- <input type="text" id="large-input" placeholder="Join the discussion and leave a comment!" class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"> -->
+                                        <!-- <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Leave a comment..."></textarea> -->
+                                        {{form.body}}
+                                    </div>
+                                    <br>
+                                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Drop your comment</button>
                                 </form>
                                 <!-- Comment with nested comments-->
+                                {% else %}
+                                    <h1 class="text-red " style="color: red;">Login to drop a comment</h1>
+                                    <br> <br>
+                                {% endif %}
                                 
-                                <div class="d-flex mb-4">
+                                <!--  -->
+                                {% for comment in comments %}
+                                <div class="d-flex mb-4 flex">
                                     <!-- Parent comment-->
-                                    <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                                     <!--  -->
+                                     {% if comment.user.profile_pic %}
+                                        <div class="flex-shrink-0 w-12">
+                                            <img class="w-26 h-26 rounded-circle h-auto max-w-1 rounded-full" src="{{comment.user.profile_pic.url}}" alt="..." />
+                                        </div>
+                                     {% endif %}
                                     <div class="ms-3">
-                                        <div class="fw-bold">Commenter Name</div>
-                                        If you're going to lead a space frontier, it has to be government; it'll never be private enterprise. Because the space frontier is dangerous, and it's expensive, and it has unquantified risks.
+                                        <div class="fw-bold">{{comment.user.username}} </div>
+                                        {{comment.body}}
                                         <!-- Child comment 1-->
+                                        <!-- {% for comment in comments %}
                                         <div class="d-flex mt-4">
-                                            <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                                            {% if comment.user.profile_pic %}
+                                                <div class="flex-shrink-0 w-12">
+                                                    <img class="w-26 h-26 rounded-circle h-auto max-w-1 rounded-full" src="{{comment.user.profile_pic.url}}" alt="..." />
+                                                </div>
+                                            {% else %}
+                                                <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                                            {% endif %}
                                             <div class="ms-3">
-                                                <div class="fw-bold">Commenter Name</div>
-                                                And under those conditions, you cannot establish a capital-market evaluation of that enterprise. You can't get investors.
+                                                <div class="fw-bold">{{comment.user.username}} </div>
+                                                {{comment.body}}
                                             </div>
                                         </div>
+                                        {% endfor %} -->
                                         <!-- Child comment 2-->
-                                        <div class="d-flex mt-4">
+                                        <!-- <div class="d-flex mt-4">
                                             <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
                                             <div class="ms-3">
                                                 <div class="fw-bold">Commenter Name</div>
                                                 When you put money directly to a problem, it makes a good headline.
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
+                                {% endfor %}
                                 <!-- Single comment-->
-                                <div class="d-flex">
+                                <!-- <div class="d-flex">
                                     <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
                                     <div class="ms-3">
                                         <div class="fw-bold">Commenter Name</div>
                                         When I look at the universe and all the ways the universe wants to kill us, I find it hard to reconcile that with statements of beneficence.
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </section>

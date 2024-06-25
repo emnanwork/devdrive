@@ -244,11 +244,40 @@ get the blog create by the user in profile fxn view found in views.py and pass i
     blogs = Blog.objects.filter(user=user)
 
 
+add edit button in articles of a user in profile page
+create update_article fxn in views.py file
+add update article url path to urls.py
+in profile.html file add the link to update the article in edit icon
+
+create delete article fxn in views.py blogapp
+add delete path in urls.py
+
+
+Comments
+create comment model in models.py in blogapp app
+register comments in the admin, admin.py file
+run migrations
+    python manage.py makemigrations
+    python manage.py migrate
+python manage.py runserver
+create a comment form in forms.py
+got to views.py, details view add comment form (render in frontend)
+in detail.html file render commentform received from detail view
+
+
+make search functionality to work
+in index.html file, add name="search" in search input
+in index view fxn in views.py, get the search request
+use Q to filter
+    from django.db.models import Q 
+
+
+paginating the blogs
 
 
 
 
-to run app
+to run app (command prompt)
     npm run dev
     python manage.py runserver
 
