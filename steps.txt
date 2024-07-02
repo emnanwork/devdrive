@@ -282,7 +282,7 @@ in pagination section run a for loop to generate the paginator
 
 Deploying app on render
 - install guincorn
-    pip install guincorn
+    pip install gunicorn
 - search django whitenoise 
     configure whitenoise (https://whitenoise.readthedocs.io/en/latest/)
     (https://medium.com/@karimmirzaguliyev/mastering-django-whitenoise-a-deep-dive-into-efficient-static-file-management-fa2aa5f669e6)
