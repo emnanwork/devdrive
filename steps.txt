@@ -313,7 +313,20 @@ for build command use
     sh build.sh
 fixed build failed, setup static root in settings.py file
     STATIC_ROOT = BASE_DIR/'assets'
-    then commit and push changes to github
+    then commit and push changes to github using git bash
+
+In render app
+    click on manual deploy and select deploy latest commit
+    if build in successful
+    copy link under service name and github project name
+    https://devdrive.onrender.com and add in allowed host in settings.py file
+        ALLOWED_HOSTS = [
+            "devdrive.onrender.com",
+            "127.0.0.1",
+            "localhost"
+        ]
+    then commit and push changes to github using git bash
+
 
 to run app (command prompt)
     npm run dev
