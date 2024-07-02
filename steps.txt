@@ -306,6 +306,14 @@ Deploying app on render
         python manage.py collectstatic --no-input
         python manage.py migrate
 
+In render when connection
+start command (gunicorn setup) use 
+    gunicorn devdrive.wsgi:application (since devdrive in the main app)
+for build command use
+    sh build.sh
+fixed build failed, setup static root in settings.py file
+    STATIC_ROOT = BASE_DIR/'assets'
+    then commit and push changes to github
 
 to run app (command prompt)
     npm run dev
