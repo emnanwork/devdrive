@@ -327,6 +327,8 @@ In render app
         ]
     then commit and push changes to github using git bash
 
+install back gunicorn then run pip freeze > requirements.txt
+then commit and push changes to github using git bash
 
 to run app (command prompt)
     npm run dev
