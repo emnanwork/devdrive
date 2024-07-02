@@ -44,15 +44,50 @@
         <!-- Posts Section -->
         <section class="w-full md:w-2/3 flex flex-col items-center px-3">
 
+
+
+
+
+
+
+
+            <!-- <div class="grid grid-cols-2 gap-2">
+                <div>01</div>
+                <div>05</div>
+            </div> -->
+
             {% if msg %}
                 <p class="display-6 text-2xl" style="color: red;">{{msg}}</p>
             {% endif %}
 
+            <div class="grid grid-cols-2 gap-2">
+                {% for blog in blogs %}
+                <div>
+                    <article class="flex flex-col shadow my-4">
+                        <!-- Article Image -->
+                        <a href="#" class="hover:opacity-75">
+                            <img src="{{blog.thumpnail.url}}">
+                        </a>
+                        <div class="bg-white flex flex-col justify-start p-6">
+                            <a href="#" class="text-blue-700 text-sm font-bold uppercase pb-4">{{blog.catgeory}}</a>
+                            <a href="#" class="text-3xl font-bold hover:text-gray-700 pb-4">{{blog.title}}</a>
+                            <p href="#" class="text-sm pb-3">
+                                By <a href="#" class="font-semibold hover:text-gray-800">David Grzyb</a>, {{blog.created}}
+                            </p>
+                            <a href="#" class="pb-6"> {{blog.body|truncatechars:"180"}} ...</a>
+                            <a href="{% url 'detail' blog.slug %}" class="uppercase text-gray-800 hover:text-black">Continue Reading <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+                </div>
+                {% endfor %}
+                <!-- ... -->
+                
+            </div>
 
-            {% for blog in blogs %}
+
+            <!-- {% for blog in blogs %}
 
             <article class="flex flex-col shadow my-4">
-                <!-- Article Image -->
                 <a href="#" class="hover:opacity-75">
                     <img src="{{blog.thumpnail.url}}">
                 </a>
@@ -67,16 +102,49 @@
                 </div>
             </article>
 
-            {% endfor %}
+            {% endfor %} -->
 
             {% comment %}
              {% endcomment %}
 
             <!-- Pagination -->
             <div class="flex items-center py-8">
-                <a href="#" class="h-10 w-10 bg-blue-800 hover:bg-blue-600 font-semibold text-white text-sm flex items-center justify-center">1</a>
+                <!-- previous pagination -->
+                {% if blogs.has_previous %}
+                
+                    <a href="?page={{blogs.previous_page_number}}" class="h-10 w-10 font-semibold text-gray-800  text-sm flex items-center justify-center">
+                        Previous</a>
+                    
+                {% endif %}
+
+                <!-- numbers -->
+                {% for page in paginator.page_range %}
+                    {% if page == blogs.number %}
+
+                        <a href="?page={{page}}" class="h-10 w-10 bg-blue-800 hover:bg-blue-600 font-semibold text-white text-sm flex items-center justify-center">{{page}}</a>
+
+                    <!-- <li class="page-item active" aria-current="page"><a class="page-link" href="?page={{page}}">{{page}}</a></li> -->
+
+                    {% else %}
+                    <!-- <li class="page-item"><a class="page-link" href="?page={{page}}">{{page}}</a></li> -->
+                    <a href="?page={{page}}" class="h-10 w-10 font-semibold text-gray-800 hover:bg-blue-600 hover:text-white text-sm flex items-center justify-center">{{page}}</a>
+                        
+                    {% endif %}
+                {% endfor %}
+
+                <!-- next -->
+                {% if blogs.has_next %}
+                
+                    <a href="?page={{blogs.next_page_number}}" class="h-10 w-10  hover:bg-blue-600 font-semibold hover:text-white  text-sm flex items-center justify-center">
+                        Next</a>
+                    
+                {% endif %}
+
+                <!--
+                 <a href="#" class="h-10 w-10 bg-blue-800 hover:bg-blue-600 font-semibold text-white text-sm flex items-center justify-center">1</a>
                 <a href="#" class="h-10 w-10 font-semibold text-gray-800 hover:bg-blue-600 hover:text-white text-sm flex items-center justify-center">2</a>
-                <a href="#" class="h-10 w-10 font-semibold text-gray-800 hover:text-gray-900 text-sm flex items-center justify-center ml-3">Next <i class="fas fa-arrow-right ml-2"></i></a>
+                <a href="#" class="h-10 w-10 font-semibold text-gray-800 hover:text-gray-900 text-sm flex items-center justify-center ml-3">Next <i class="fas fa-arrow-right ml-2"></i></a> 
+                -->
             </div>
 
         </section>

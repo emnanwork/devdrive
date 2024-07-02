@@ -6,6 +6,7 @@ from .forms import CreateBlogForm, CommentForm
 from django.utils.text import slugify
 from django.contrib import messages
 from django.db.models import Q # use Q to filter
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 # Create your views here.
 def index(request):
@@ -18,9 +19,9 @@ def index(request):
                                     Q(category__title__icontains=keyword))
         
         if blogs.exists():
-            pass
-            # paginator = Paginator(blogs, 4)
-            # blogs = paginator.page(1)
+            # pass
+            paginator = Paginator(blogs, 4)
+            blogs = paginator.page(1)
         
         else:
             msg = "There is no article with the keyword"
@@ -28,6 +29,20 @@ def index(request):
             
     else:
         blogs = Blog.objects.filter(featured=False)
+        paginator = Paginator(blogs, 4)
+        # blogs = paginator.page(1)
+        page = request.GET.get("page")
+
+        # blogs = paginator.page(page)
+        
+        try:
+            blogs = paginator.page(page)
+            
+        except PageNotAnInteger:
+            blogs = paginator.page(1)
+        
+        except EmptyPage:
+            blogs = paginator.page(paginator.num_pages)
     
     # blogs = Blog.objects.all()
     # blogs = Blog.objects.filter(featured=False)
@@ -37,8 +52,8 @@ def index(request):
     # }
     # return render(request, "blogapp/index.html", context)
     categories = Category.objects.all()
-    context = {"blogs":blogs, "cats": categories,"f_blog": featured_blog,"msg": msg}
-    # context = {"blogs":blogs, "msg":msg, "paginator": paginator, "cats": categories}
+    # context = {"blogs":blogs, "cats": categories,"f_blog": featured_blog,"msg": msg}
+    context = {"blogs":blogs, "msg":msg, "paginator": paginator, "cats": categories}
     return render(request, "blogapp/index.html", context)
 
 

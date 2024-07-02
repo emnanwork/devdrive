@@ -273,6 +273,11 @@ use Q to filter
 
 
 paginating the blogs
+in the views.py file import django pagination 
+from django.core.paginator import Paginator
+need to pass queryset to the pagination class
+passing the paginator to the context, so that we can be able to use it in front end
+in pagination section run a for loop to generate the paginator
 
 
 
@@ -280,6 +285,8 @@ paginating the blogs
 to run app (command prompt)
     npm run dev
     python manage.py runserver
+
+
 
 
 
