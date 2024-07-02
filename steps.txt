@@ -280,6 +280,31 @@ passing the paginator to the context, so that we can be able to use it in front 
 in pagination section run a for loop to generate the paginator
 
 
+Deploying app on render
+- install guincorn
+    pip install guincorn
+- search django whitenoise 
+    configure whitenoise (https://whitenoise.readthedocs.io/en/latest/)
+    (https://medium.com/@karimmirzaguliyev/mastering-django-whitenoise-a-deep-dive-into-efficient-static-file-management-fa2aa5f669e6)
+    pip install whitenoise
+    add white noise middleware in settings.py file
+        after "django.middleware.security.SecurityMiddleware",
+        "whitenoise.middleware.WhiteNoiseMiddleware",
+    Want forever-cacheable files and compression support? Just add this to your settings.py
+    for static files
+        STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+- create a requirement.txt file (for all depencies of webapp)
+    pip freeze > requirements.txt
+- create build.sh file in root directory
+ paste code in build.sh file (https://github.com/CodeWithClinton/django_24/blob/main/build.sh)
+        #!/usr/bin/env bash
+
+        set -o errexit  # exit on error
+
+        pip install -r requirements.txt
+
+        python manage.py collectstatic --no-input
+        python manage.py migrate
 
 
 to run app (command prompt)
