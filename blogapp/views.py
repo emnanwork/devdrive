@@ -17,7 +17,7 @@ def index(request):
     if keyword:
         blogs = Blog.objects.filter(Q(title__icontains=keyword) | Q(body__icontains=keyword) | 
                                     Q(category__title__icontains=keyword))
-        
+         
         if blogs.exists():
             # pass
             paginator = Paginator(blogs, 4)

@@ -335,7 +335,79 @@ to run app (command prompt)
     python manage.py runserver
 
 
+API
+python manage.py runserver
+pip install djangorestframework
+add djangorestframework ('rest_framework',) to INSTALLED_APPS in main project devdrive seetings.py file
 
+create api app 
+    python manage.py startapp drf
+add drf api app in INSTALLED_APPS in main project devdrive seetings.py file
+
+create serializers.py file in drf app folder (make all model into json form)
+in serializers.py file import serializers
+     from rest_framework import serializers
+import all models into serializers.py file
+    starting with blogapp models (from blogapp.models import Blog, Comment)
+create a serializers for Blog model BlogSerializer
+
+in views.py files import api_views
+    from rest_framework.decorators import api_views
+import BlogSerializer 
+    from drf.serializers import BlogSerializer
+import Blog model
+    from blogapp.models import Blog
+create urls.py file in drf app folder
+    from django.urls import path
+    from . import views
+in main folder devdrive urls.py add drf urls.py file 
+    path("api/", include("drf.urls")),
+
+python manage.py runserver
+
+
+for the post request we have to deserializers the post request to get the data
+
+in blogapp app models.py file add the save method to set the slugify value of title as slug value before saving or blod creation
+    from django.utils.text import slugify
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super(Blog, self).save(*args, **kwargs)
+
+python manage.py runserver
+
+
+test blog post method in drf views with POSTMAN
+    http://127.0.0.1:8000/api/blogs (POST)
+    select body
+        select form-data
+        key (put fields: title(on the dropdown leave default Text), (as value write a text)
+                body(on the dropdown leave default Text), (as value write a text)
+                thumpnail(on the dropdown select File), (as value select the file)
+                category(on the dropdown leave default Text) (as value pass the id e.g 1)
+            )
+    Then click on Send button
+    error key slug is required
+        add key slug and value (title slugify: pandas-full-course)
+        "title": "Pandas Full Course",
+        "slug": "pandas-full-course",
+        "body": "PANDAS FOR BEGINNERS",
+        "thumpnail": "/img/img/pandas.png",
+        "category": 1,
+    if no error it show all the blogs ie GET method
+
+drf views.py file
+for the update and delete function
+import get_object_or_404
+    from django.shortcuts import get_object_or_404
+create blog_detail function and get blog with primary key 
+    def blog_detail(request, pk)
+add the api view decorators @api_view(['GET', 'PUT', 'DELETE'])
+in urls.py file add path to blog_detail
+    path("blogs/<int:pk>", views.blog_detail)
+
+python manage.py runserver
 
 
 

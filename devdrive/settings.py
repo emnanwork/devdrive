@@ -46,7 +46,11 @@ INSTALLED_APPS = [
 
     'core',
     'blogapp',
-    'django_browser_reload' ,
+    'django_browser_reload',
+    'drf',
+
+    #third party app
+    'rest_framework',
 
 ]
 
