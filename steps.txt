@@ -351,6 +351,7 @@ import all models into serializers.py file
     starting with blogapp models (from blogapp.models import Blog, Comment)
 create a serializers for Blog model BlogSerializer
 
+function based views
 in views.py files import api_views
     from rest_framework.decorators import api_views
 import BlogSerializer 
@@ -408,6 +409,11 @@ in urls.py file add path to blog_detail
     path("blogs/<int:pk>", views.blog_detail)
 
 python manage.py runserver
+
+Class based views
+in views.py file
+    import APIView (from rest_framework.views import APIView) 
+    create BlogDetailAPIView class, pass APIView as argument
 
 
 
