@@ -416,17 +416,147 @@ in views.py file
     create BlogDetailAPIView class, pass APIView as argument
 
 
+api with ModelViewSet
+in views import ModelViewSet
+    from rest_framework.viewsets import ModelViewSet
+create blog model view set
+    class BlogModelViewSet(ModelViewSet):
+        serializer_class = BlogSerializer
+        queryset = Blog.objects.all()
+
+in urls.py file use DefaultRouter from rest_framework routers
+    from rest_framework.routers import DefaultRouter (import)
+
+    router = DefaultRouter()
+
+    router.register("blogs", views.BlogModelViewSet)
+
+    urlpatterns = [
+        path("", include(router.urls)),
+    ]
+
+to create a post require login ie authorize user using djoser
+https://djoser.readthedocs.io/en/latest/getting_started.html
+Installation
+    pip install -U djoser
 
 
+Configuration¶
+    Configure INSTALLED_APPS:
+
+    INSTALLED_APPS = (
+        'django.contrib.auth',
+        (...),
+        'rest_framework',
+        'djoser',
+        (...),
+    )
+Configure urls.py:
+
+    urlpatterns = [
+        (...),
+        path('auth/', include('djoser.urls')),
+    ]
 
 
+If you are going to use JWT authentication, you will also need to install djangorestframework_simplejwt with:
+
+    pip install -U djangorestframework_simplejwt
+
+https://djoser.readthedocs.io/en/latest/authentication_backends.html
 
 
+add the following in the btm of project settings.py file
+    REST_FRAMEWORK = {
+        'DEFAULT_AUTHENTICATION_CLASSES': (
+            'rest_framework_simplejwt.authentication.JWTAuthentication',
+           
+        ),
+    }
+
+Configure django-rest-framework-simplejwt to use the Authorization: JWT <access_token> header:
+
+    SIMPLE_JWT = {
+    'AUTH_HEADER_TYPES': ('JWT',),
+    }
+
+urls.py¶
+Configure urls.py with djoser.url.jwt module path:
+
+urlpatterns = [
+    (...),
+    url(r'^auth/', include('djoser.urls')),
+    url(r'^auth/', include('djoser.urls.jwt')),
+]
 
 
+https://djoser.readthedocs.io/en/latest/getting_started.html
+Getting started¶
+Available endpoints¶
+/users/
+/users/me/
+/users/confirm/
+/users/resend_activation/
+/users/set_password/
+/users/reset_password/
+/users/reset_password_confirm/
+/users/set_username/
+/users/reset_username/
+/users/reset_username_confirm/
+/token/login/ (Token Based Authentication)
+/token/logout/ (Token Based Authentication)
+/jwt/create/ (JSON Web Token Authentication)
+/jwt/refresh/ (JSON Web Token Authentication)
+/jwt/verify/ (JSON Web Token Authentication)
+
+Supported authentication backends¶
+Token based authentication from DRF
+
+JSON Web Token authentication from django-rest-framework-simplejwt
+
+to test jwt login using browser use mod header extension
+    https://chromewebstore.google.com/detail/modheader-modify-http-hea/idgpnmonknjnojddfkpgkljpfnnfcklj?pli=1
 
 
+to make the access token last more than 5min
+https://django-rest-framework-simplejwt.readthedocs.io/en/latest/settings.html
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5), (change 5 to 60)
 
 
+use djoser serializers
+SERIALIZERS¶ (https://djoser.readthedocs.io/en/latest/settings.html)
+Dictionary which maps djoser serializer names to serializer classes (use dotted path). This setting provides a way to easily override given serializer(s) - it is used to update the defaults, so by providing, e.g. one key, all the others will stay default.
+Note
+Key 'user' is used for general users whereas 'current_user' lets you set serializer for special /users/me endpoint. They both default to the same serializer though.
+Examples
+    {
+        'user': 'myapp.serializers.SpecialUserSerializer',
+    }
 
 
+python manage.py runserver
+
+
+how to add more user information in user profile route (http://127.0.0.1:8000/auth/users/me/)
+    which can be modified
+    get the current_user serializers (https://djoser.readthedocs.io/en/latest/settings.html)
+        'current_user': 'djoser.serializers.UserSerializer',
+        we can customize the serializer to tame more fields
+in serializer.py file
+    import user serializer (from djoser.serializers import UserSerializer)
+    import get_user_model (from django.contrib.auth import get_user_model)
+    create CustomUserSerializer class and use get_user_model as model
+
+go to settings.py file
+    let django know about CustomUserSerializer
+    DJOSER = {
+        'SERIALIZERS': {
+            'current_user': 'drf.serializers.CustomUserSerializer'
+        }
+    }
+
+
+python manage.py runserver
+
+
+01:36:00

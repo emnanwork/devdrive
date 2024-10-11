@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+from datetime import timedelta
 import os
 
 from pathlib import Path
@@ -51,6 +52,7 @@ INSTALLED_APPS = [
 
     #third party app
     'rest_framework',
+    'djoser',
 
 ]
 
@@ -147,3 +149,26 @@ MEDIA_ROOT = BASE_DIR/'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'core.CustomUser'
+
+# using jwt as default auth
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        
+    ),
+}
+
+SIMPLE_JWT = {
+    'AUTH_HEADER_TYPES': ('JWT',),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
+}
+
+DJOSER = {
+    'SERIALIZERS': {
+        'current_user': 'drf.serializers.CustomUserSerializer'
+    }
+}
+
+
+
+

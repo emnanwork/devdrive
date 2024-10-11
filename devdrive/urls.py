@@ -25,6 +25,8 @@ urlpatterns = [
     path("", include("blogapp.urls")),
     path("user/", include("core.urls")),
     path("api/", include("drf.urls")),
+    path('auth/', include('djoser.urls')),
+    path('auth/', include('djoser.urls.jwt')),
     path("__reload__/", include("django_browser_reload.urls")),
 ]
 
