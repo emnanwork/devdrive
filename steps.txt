@@ -558,5 +558,8 @@ go to settings.py file
 
 python manage.py runserver
 
+create, edit and delete articles only when logged in
+    add permissions to blog model view set (drf/views)
+        import IsAuthenticated and AllowAny from rest_framework.permissions
 
 01:36:00
